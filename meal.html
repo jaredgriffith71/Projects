@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="frontpage">
+        <h1>Sweetgreen Meal Selector</h1>
+        <h2>Press start to begin building your meal!</h2>
+        <button id="start">START</button>
+    </div>
+    <div id="protein" style="display:none">
+        <input type="radio" id="steak" name="protein" value="Caramelized Garlic Steak">
+        <label for="steak">Caramelized Garlic Steak</label>
+        <input type="radio" id="bChicken" name="protein" value="Blackened Chicken">
+        <label for="bChicken">Blackened Chicken</label>
+        <input type="radio" id="rChicken" name="protein" value="Roasted Chicken">
+        <label for="rChicken">Roasted Chicken</label>
+        <input type="radio" id="salmon" name="protein" value="Miso Glazed Salmon">
+        <label for="salmon">Miso Glazed Salmon</label>
+        <input type="radio" id="tofu" name="protein" value="Roasted Tofu">
+        <label for="tofu">Roasted Tofu</label>
+        <input type="radio" id="eggs" name="protein" value="Hard Boiled Egg">
+        <label for="eggs">Hard Boiled Egg</label>
+        <input type="radio" id="chickpeas" name="protein" value="Chickpeas">
+        <label for="chickpeas">Chickpeas</label>
+        <button id="next1">Next</button>
+        <button id="back1">Back</button>
+    </div>
+    <div id="rice" style="display:none">
+        <input type="radio" id="cRice" name="rice" value="Crispy Rice">
+        <label for="cRice">Crispy Rice</label>
+        <input type="radio" id="whiteRice" name="rice" value="White Rice">
+        <label for="whiteRice">White Rice</label>
+        <input type="radio" id="wildRice" name="rice" value="Wild Rice">
+        <label for="wildRice">Wild Rice</label>
+        <input type="radio" id="noRice" name="rice" value="No Rice">
+        <label for="noRice">No Rice</label>
+        <button id="next2">Next</button>
+        <button id="back2">Back</button>
+    </div>
+    <div id="leaf" style="display:none">
+        <input type="radio" id="spinach" name="leaf" value="Baby Spinach">
+        <label for="spinach">Baby Spinach</label>
+        <input type="radio" id="romaine" name="leaf" value="Chopped Romaine">
+        <label for="romaine">Chopped Romaine</label>
+        <input type="radio" id="cabbage" name="leaf" value="Shredded Cabbage">
+        <label for="cabbage">Shredded Cabbage</label>
+        <input type="radio" id="kale" name="leaf" value="Shredded Kale">
+        <label for="kale">Shredded Kale</label>
+        <input type="radio" id="noGreens" name="leaf" value="No Greens">
+        <label for="noGreens">No Greens</label>
+        <button id="next3">Next</button>
+        <button id="back3">Back</button>
+    </div>
+    <div id="cheese" style="display:none">
+        <input type="radio" id="blueCheese" name="cheese" value="Blue Cheese">
+        <label for="blueCheese">Blue Cheese</label>
+        <input type="radio" id="goatCheese" name="cheese" value="Goat Cheese">
+        <label for="goatCheese">Goat Cheese</label>
+        <input type="radio" id="parmCrisps" name="cheese" value="Parmesan Crisps">
+        <label for="parmCrisps">Parmesan Crisps</label>
+        <input type="radio" id="sParm" name="cheese" value="Shaved Parmesan">
+        <label for="sParm">Shaved Parmesan</label>
+        <input type="radio" id="noCheese" name="cheese" value="No Cheese">
+        <label for="noCheese">No Cheese</label>
+        <button id="next4">Next</button>
+        <button id="back4">Back</button>
+    </div>
+    <div id="toppings" style="display:none">
+        <fieldset>
+            <legend>Toppings</legend>
+            <label><input type="checkbox" id="apples" name="toppings" value="Apples"> Apples</label>
+            <label><input type="checkbox" id="avocado" name="toppings" value="Avocado"> Avocado</label>
+            <label><input type="checkbox" id="basil" name="toppings" value="Basil"> Basil</label>
+            <label><input type="checkbox" id="cilantro" name="toppings" value="Cilantro"> Cilantro</label>
+            <label><input type="checkbox" id="cOnions" name="toppings" value="cOnions"> Crispy Onions</label>
+            <label><input type="checkbox" id="cucumbers" name="toppings" value="cucumbers"> Cucumbers</label>
+            <label><input type="checkbox" id="quinoa" name="toppings" value="quinoa"> Herbed Quinoa</label>
+            <label><input type="checkbox" id="lime" name="toppings" value="lime"> Lime Squeeze</label>
+            <label><input type="checkbox" id="pOnions" name="toppings" value="pOnions"> Pickled Onions</label>
+            <label><input type="checkbox" id="carrots" name="toppings" value="carrots"> Raw Carrots</label>
+            <label><input type="checkbox" id="almonds" name="toppings" value="almonds"> Toasted Almonds</label>
+            <label><input type="checkbox" id="sweetPotatoes" name="toppings" value="sweetPotatoes"> Roasted Sweet Potatoes</label>
+            <label><input type="checkbox" id="brocolli" name="toppings" value="brocolli"> Spicy Brocolli</label>
+            <label><input type="checkbox" id="cashews" name="toppings" value="cashews"> Spicy Cashew</label>
+            <label><input type="checkbox" id="springMix" name="toppings" value="springMix"> Spring Mix</label>
+            <label><input type="checkbox" id="tomatoes" name="toppings" value="tomatoes"> Tomatoes</label>
+            <label><input type="checkbox" id="tortilla" name="toppings" value="tortilla"> Tortilla Chips</label>
+            <label><input type="checkbox" id="vegSlaw" name="toppings" value="vegSlaw"> Veg Slaw</label>
+            <label><input type="checkbox" id="portobello" name="toppings" value="portobello"> Warm Portobello Mix</label>
+            <label><input type="checkbox" id="warmSweetPotatoes" name="toppings" value="warmSweetPotatoes"> Warm Roasted Sweet Potatoes</label>
+            <label><input type="checkbox" id="breadcrumbs" name="toppings" value="breadcrumbs"> Za'atar Breadcrumbs</label>
+            <button id="next5">Next</button>
+            <button id="back5">Back</button>
+        </fieldset>
+    </div>
+    <div id="dressing" style="display:none">
+        <input type="radio" id="balsamic" name="dressing" value="Balsamic Vinaigrette">
+        <label for="balsamic">Balsamic Vinaigrette</label>
+        <input type="radio" id="caesar" name="dressing" value="Caesar">
+        <label for="caesar">Caesar</label>
+        <input type="radio" id="goddess" name="dressing" value="Green Goddess Ranch">
+        <label for="goddess">Green Goddess Ranch</label>
+        <input type="radio" id="honeyBBQ" name="dressing" value="Honey BBQ Sauce">
+        <label for="honeyBBQ">Honey BBQ Sauce</label>
+        <input type="radio" id="honeyMustard" name="dressing" value="Hot Honey Mustard Sauce">
+        <label for="honeyMustard">Hot Honey Mustard Sauce</label>
+        <input type="radio" id="limeCilantro" name="dressing" value="Lime Cilantro Jalapeño Vinaigrette">
+        <label for="limeCilantro">Lime Cilantro Jalapeño Vinaigrette</label>
+        <input type="radio" id="misoGinger" name="dressing" value="Miso Sesame Ginger Dressing">
+        <label for="misoGinger">Miso Sesame Ginger Dressing</label>
+        <input type="radio" id="nori" name="dressing" value="Nori Sesame Seasoning">
+        <label for="nori">Nori Sesame Seasoning</label>
+        <input type="radio" id="pesto" name="dressing" value="Pesto Vinaigrette">
+        <label for="pesto">Pesto Vinaigrette</label>
+        <input type="radio" id="hotSauce" name="dressing" value="Sweetgreen Hot Sauce">
+        <label for="hotSauce">Sweetgreen Hot Sauce</label>
+        <button id="next6">Next</button>
+        <button id="back6">Back</button>
+    </div>
+    <script type="module" src="./sweetgreen_script.js"></script>
+</body>
+</html>
