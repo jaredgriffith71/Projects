@@ -1,0 +1,253 @@
+{
+    "menuItems": [
+      {
+        "name": "Steakhouse Chopped",
+        "ingredients": [
+          "Caramelized Garlic Steak",
+          "Shredded Cabbage",
+          "Tomatoes",
+          "Crispy Onions",
+          "Blue Cheese",
+          "Herbed Quinoa",
+          "Chopped Romaine",
+          "Green Goddess Ranch"
+        ]
+      },
+      {
+        "name": "Harvest Bowl",
+        "ingredients": [
+          "Roasted Chicken",
+          "Roasted Sweet Potatoes",
+          "Apples",
+          "Goat Cheese",
+          "Roasted Almonds",
+          "Wild Rice",
+          "Shredded Kale",
+          "Balsamic Vinaigrette"
+        ]
+      },
+      {
+        "name": "Crispy Rice Bowl",
+        "ingredients": [
+          "Blackened Chicken",
+          "Raw Carrots",
+          "Shredded Cabbage",
+          "Cucumbers",
+          "Cilantro",
+          "Roasted Almonds",
+          "Crispy Rice",
+          "Wild Rice",
+          "Spring Mix",
+          "Lime Squeeze",
+          "Spicy Cashew"
+        ]
+      },
+      {
+        "name": "Chicken Pesto Parm",
+        "ingredients": [
+          "Roasted Chicken",
+          "Spicy Broccoli",
+          "Tomatoes",
+          "Shaved Parmesan",
+          "Za’atar Breadcrumbs",
+          "Herbed Quinoa",
+          "Baby Spinach",
+          "Sweetgreen Hot Sauce",
+          "Pesto Vinaigrette"
+        ]
+      },
+      {
+        "name": "Chicken Avocado Ranch",
+        "ingredients": [
+          "Blackened Chicken",
+          "Avocado",
+          "Pickled Onions",
+          "Apples",
+          "Tortilla Chips",
+          "White Rice",
+          "Chopped Romaine",
+          "Green Goddess Ranch"
+        ]
+      },
+      {
+        "name": "Shroomami",
+        "ingredients": [
+          "Roasted Tofu",
+          "Warm Portobello Mix",
+          "Cucumbers",
+          "Basil",
+          "Shredded Cabbage",
+          "Roasted Almonds",
+          "Wild Rice",
+          "Shredded Kale",
+          "Miso Sesame Ginger Dressing"
+        ]
+      },
+      {
+        "name": "Fish Taco",
+        "ingredients": [
+          "Miso Glazed Salmon",
+          "Avocado",
+          "Shredded Cabbage",
+          "Cilantro",
+          "Tortilla Chips",
+          "Herbed Quinoa",
+          "Spring Mix",
+          "Sweetgreen Hot Sauce",
+          "Lime Cilantro Jalapeño Vinaigrette"
+        ]
+      },
+      {
+        "name": "Caramelized Garlic Steak",
+        "ingredients": [
+          "Caramelized Garlic Steak",
+          "Spicy Broccoli",
+          "Tomatoes",
+          "Warm Roasted Sweet Potatoes",
+          "Wild Rice",
+          "Pesto Vinaigrette"
+        ]
+      },
+      {
+        "name": "Miso Glazed Salmon",
+        "ingredients": [
+          "Miso Glazed Salmon",
+          "Avocado",
+          "Cucumbers",
+          "Pickled Onions",
+          "Crispy Onions",
+          "White Rice",
+          "Nori Sesame Seasoning",
+          "Spicy Cashew"
+        ]
+      },
+      {
+        "name": "Hot Honey Chicken",
+        "ingredients": [
+          "Blackened Chicken",
+          "Warm Roasted Sweet Potatoes",
+          "Veg Slaw",
+          "Crispy Onions",
+          "Herbed Quinoa",
+          "Hot Honey Mustard Sauce"
+        ]
+      },
+      {
+        "name": "Kale Caesar (Steak)",
+        "ingredients": [
+          "Caramelized Garlic Steak",
+          "Tomatoes",
+          "Parmesan Crisps",
+          "Shaved Parmesan",
+          "Chopped Romaine",
+          "Shredded Kale",
+          "Caesar",
+          "Lime Squeeze"
+        ]
+      },
+      {
+        "name": "Kale Caesar",
+        "ingredients": [
+          "Roasted Chicken",
+          "Tomatoes",
+          "Parmesan Crisps",
+          "Shaved Parmesan",
+          "Chopped Romaine",
+          "Shredded Kale",
+          "Caesar",
+          "Lime Squeeze"
+        ]
+      },
+      {
+        "name": "Guacamole Greens",
+        "ingredients": [
+          "Roasted Chicken",
+          "Avocado",
+          "Tomatoes",
+          "Pickled Onions",
+          "Shredded Cabbage",
+          "Tortilla Chips",
+          "Spring Mix",
+          "Chopped Romaine",
+          "Lime Squeeze",
+          "Lime Cilantro Jalapeño Vinaigrette"
+        ]
+      },
+      {
+        "name": "BBQ Chicken Salad",
+        "ingredients": [
+          "Blackened Chicken",
+          "Shredded Cabbage",
+          "Pickled Onions",
+          "Tomatoes",
+          "Apples",
+          "Tortilla Chips",
+          "Chopped Romaine",
+          "Shredded Kale",
+          "Honey BBQ Sauce",
+          "Green Goddess Ranch"
+        ]
+      },
+      {
+        "name": "Hummus Crunch",
+        "ingredients": [
+          "Hummus",
+          "Chickpeas",
+          "Tomatoes",
+          "Cucumbers",
+          "Shredded Cabbage",
+          "Pickled Onions",
+          "Basil",
+          "Za’atar Breadcrumbs",
+          "Chopped Romaine",
+          "Shredded Kale",
+          "Pesto Vinaigrette"
+        ]
+      },
+      {
+        "name": "Buffalo Chicken",
+        "ingredients": [
+          "Blackened Chicken",
+          "Pickled Onions",
+          "Tomatoes",
+          "Raw Carrots",
+          "Cilantro",
+          "Blue Cheese",
+          "Za’atar Breadcrumbs",
+          "Shredded Kale",
+          "Chopped Romaine",
+          "Sweetgreen Hot Sauce",
+          "Caesar"
+        ]
+      },
+      {
+        "name": "Super Green Goddess",
+        "ingredients": [
+          "Chickpeas",
+          "Roasted Sweet Potatoes",
+          "Raw Carrots",
+          "Spicy Broccoli",
+          "Shredded Cabbage",
+          "Roasted Almonds",
+          "Baby Spinach",
+          "Shredded Kale",
+          "Green Goddess Ranch"
+        ]
+      },
+      {
+        "name": "Garden Cobb",
+        "ingredients": [
+          "Hard Boiled Egg",
+          "Avocado",
+          "Roasted Sweet Potatoes",
+          "Tomatoes",
+          "Blue Cheese",
+          "Roasted Almonds",
+          "Spring Mix",
+          "Chopped Romaine",
+          "Balsamic Vinaigrette"
+        ]
+      }
+    ]
+  }
+  
