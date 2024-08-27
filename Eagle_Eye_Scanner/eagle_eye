@@ -6,7 +6,17 @@ from telegram_reader import read_telegram_messages
 from api_interaction import fetch_wallet_balance
 
 LAST_MESSAGE_ID_FILE = 'last_message_id.txt'
-MAX_TOKENS_CACHE = 3  # Maximum number of tokens to cache
+MAX_PAIRS_CACHE = 3  # Maximum number of token-wallet pairs to cache
+
+class TokenPairQueue:
+    def __init__(self, max_size=MAX_PAIRS_CACHE):
+        self.queue = deque(maxlen=max_size)
+
+    def add_pair(self, pair):
+        self.queue.append(pair)
+
+    def contains(self, pair):
+        return pair in self.queue
 
 def get_last_message_id():
     if os.path.exists(LAST_MESSAGE_ID_FILE):
@@ -32,10 +42,48 @@ api_hash = '6a5d75ba93e747bf2411533f00237db6'
 phone_number = '+19419610694'
 channel_name = 'SolanaNewPumpfun'
 
+async def process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache):
+    print(f"\n---\nProcessing Token: {token_name}\nToken Address: {token_address}\nWallet: {wallet_address}\nTotal Supply: {total_supply}")
+
+    if pair_queue.contains((wallet_address, token_address)):
+        print(f"Skipping already processed message ID: {message_id}")
+        return
+
+    # Introduce a delay before making the API call
+    await asyncio.sleep(5)
+
+    cache_key = (wallet_address, token_address)
+    creator_balance = fetch_wallet_balance(wallet_address, token_address, api_key)
+    if creator_balance is not None:
+        wallet_cache[cache_key] = creator_balance
+        print(f"Token Balance: {creator_balance}")
+    else:
+        print(f"Failed to fetch balance for wallet {wallet_address}")
+        return
+
+    if check_creator_wallet_percentage(float(total_supply), creator_balance):
+        message_text = (
+            f"ALERT: Wallet holds 20-30% of supply.\n\n"
+            f"Token Name: {token_name}\n"
+            f"Creator Wallet: {wallet_address}\n"
+            f"Token Address: `{token_address}`\n"
+            f"Token Balance: {creator_balance}\n\n"
+            f"BullX: https://bullx.io/terminal?chainId=1399811149&address={token_address}\n\n"
+            f"Photon: https://photon-sol.tinyastro.io/en/lp/{token_address}"
+
+        )
+        print(f"\n---\n{message_text}\n---")
+        await send_message_to_chat(message_text)
+    else:
+        print("Creator's wallet does not hold between 20% and 30% of the total supply.")
+
+    # Add the pair to the recently processed queue
+    pair_queue.add_pair((wallet_address, token_address))
+
 async def main():
     last_message_id = get_last_message_id()
-    token_queue = deque(maxlen=MAX_TOKENS_CACHE)
     wallet_cache = {}
+    pair_queue = TokenPairQueue(MAX_PAIRS_CACHE)
 
     if last_message_id is None:
         async for message_id, *_ in read_telegram_messages(api_id, api_hash, phone_number, channel_name, None):
@@ -44,50 +92,19 @@ async def main():
             break
 
     while True:
-        async for message_id, token_address, wallet_address, total_supply in read_telegram_messages(api_id, api_hash, phone_number, channel_name, last_message_id):
-            print(f"\n---\nProcessing Token: {token_address}\nWallet: {wallet_address}\nTotal Supply: {total_supply}")
-
+        async for message_id, token_address, wallet_address, total_supply, token_name in read_telegram_messages(api_id, api_hash, phone_number, channel_name, last_message_id):
             if message_id <= last_message_id:
-                print(f"Skipping already processed message ID: {message_id}")
                 continue
 
             set_last_message_id(message_id)
 
-            # Check if the token is already in the queue
-            existing_token = next((item for item in token_queue if item[0] == token_address), None)
-            if existing_token:
-                print(f"Token {token_address} is already in the queue.")
-                continue
+            # Process each message and manage the queue
+            await process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache)
+            await asyncio.sleep(2)  # Staggering the processing with a delay of 2 seconds
 
-            # Add the new token to the queue
-            token_queue.append((token_address, float(total_supply)))
-
-            # Process only the tokens in the queue
-            for token_address, total_supply in list(token_queue):
-                cache_key = (wallet_address, token_address)
-                if cache_key not in wallet_cache:
-                    creator_balance = fetch_wallet_balance(wallet_address, token_address, api_key)
-                    if creator_balance is not None:
-                        wallet_cache[cache_key] = creator_balance
-                        print(f"Token Balance: {creator_balance}")
-                    else:
-                        print(f"Failed to fetch balance for wallet {wallet_address}")
-                        continue
-                else:
-                    creator_balance = wallet_cache[cache_key]
-                    print(f"Token Balance (cached): {creator_balance}")
-
-                if check_creator_wallet_percentage(total_supply, creator_balance):
-                    message_text = (
-                        f"ALERT: Wallet holds 20-30% of supply.\n\n"
-                        f"Creator Wallet: {wallet_address}\n"
-                        f"Token Address: {token_address}\n"
-                        f"Token Balance: {creator_balance}"
-                    )
-                    print(f"---\n{message_text}\n---")
-                    await send_message_to_chat(message_text)
-                else:
-                    print(f"Creator's wallet does not hold between 20% and 30% of the total supply.")
+            # Ensure only the first scan outputs results
+            if len(pair_queue.queue) == MAX_PAIRS_CACHE:
+                print(f"Queue full. Message {pair_queue.queue[0]} will be removed on the next incoming message.")
 
         print("Waiting for new messages...")
         await asyncio.sleep(3)
