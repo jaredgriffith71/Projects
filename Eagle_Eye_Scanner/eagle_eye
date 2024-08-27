@@ -66,10 +66,14 @@ async def process_message(message_id, token_name, token_address, wallet_address,
             f"ALERT: Wallet holds 20-30% of supply.\n\n"
             f"Token Name: {token_name}\n"
             f"Creator Wallet: {wallet_address}\n"
-            f"Token Address: `{token_address}`\n"
+            f"Token Address: <code>{token_address}</code>\n"
             f"Token Balance: {creator_balance}\n\n"
-            f"BullX: https://bullx.io/terminal?chainId=1399811149&address={token_address}\n\n"
-            f"Photon: https://photon-sol.tinyastro.io/en/lp/{token_address}"
+            #f"[Bullx](https://bullx.io/terminal?chainId=1399811149&address={token_address})\n\n"
+            #f"[Photon](https://photon-sol.tinyastro.io/en/lp/{token_address})\n\n"
+            #f"[Solscan](https://solscan.io/account/{wallet_address})"
+            f"<a href='https://bullx.io/terminal?chainId=1399811149&address={token_address}'>Bullx</a>\n\n"
+            f"<a href='https://photon-sol.tinyastro.io/en/lp/{token_address}'>Photon</a>\n\n"
+            f"<a href='https://solscan.io/account/{wallet_address}'>Solscan</a>"
 
         )
         print(f"\n---\n{message_text}\n---")
