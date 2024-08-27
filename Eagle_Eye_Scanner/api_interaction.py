@@ -9,7 +9,8 @@ def fetch_wallet_balance(wallet_address, token_address, api_key):
         data = response.json()
 
         for token in data.get('tokens', []):
-            if token.get('mint') == token_address:
+            mint_address = token.get('mint')
+            if mint_address == token_address:
                 token_amount_str = token.get('amount', '0')
                 token_decimals_str = token.get('decimals', '0')
 
