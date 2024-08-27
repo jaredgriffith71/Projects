@@ -6,7 +6,7 @@ import asyncio
 API_TOKEN = '7546943927:AAFOqfThcLXFblo7gAL9v25yqQEi_Q-H208'
 
 # Replace with your chat ID
-CHAT_ID = -4562377709
+CHAT_ID = -1002230829243
 
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
