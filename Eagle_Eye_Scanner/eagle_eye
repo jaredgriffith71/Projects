@@ -36,7 +36,7 @@ def check_creator_wallet_percentage(total_supply, creator_balance):
         print("Total supply cannot be zero.")
         return False
 
-api_key = 'ce570c25-2216-4939-80d7-e85446f5858b'
+api_key = '0d325468-a71b-4d99-864e-0b4afbac4f20'
 api_id = '24855421'
 api_hash = '6a5d75ba93e747bf2411533f00237db6'
 phone_number = '+19419610694'
