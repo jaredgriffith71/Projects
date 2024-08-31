@@ -26,7 +26,7 @@ async def send_help(message: types.Message):
 async def send_message_to_chat(message_text: str):
     try:
         # Send the message with HTML parse mode
-        await bot.send_message(chat_id=CHAT_ID, text=message_text, parse_mode="HTML")
+        await bot.send_message(chat_id=CHAT_ID, text=message_text, parse_mode="HTML", disable_web_page_preview=True)
         print(f"Message sent to chat {CHAT_ID}: {message_text}")
     except Exception as e:
         print(f"Failed to send message: {e}")
