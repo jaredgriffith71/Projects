@@ -7,8 +7,27 @@ from api_interaction import fetch_wallet_balance
 
 LAST_MESSAGE_ID_FILE = 'last_message_id.txt'
 MAX_PAIRS_CACHE = 3  # Maximum number of token-wallet pairs to cache
-BURN_SCAN_INTERVAL = 60  # Scan for burns every 60 seconds (1 minute)
-BURN_TRACK_DURATION = 3600  # Track tokens for burns for 1 hour (3600 seconds)
+
+api_keys = [
+    '7f1a9f41-aa9d-41ac-84c9-6b879c5dd8eb',
+    '9cffcf12-0c33-476c-af8f-e00c249d93a2',
+    '51d469a8-d566-41f1-b885-ef3c70e86617',
+    '67e2cdf5-f8fe-4440-b525-896c5ca3db11',
+    'dbc9b5f2-b852-4164-80ea-c5afc4b30750'
+]
+api_key_index = 0
+api_key = api_keys[api_key_index]
+
+api_id = '24855421'
+api_hash = '6a5d75ba93e747bf2411533f00237db6'
+phone_number = '+19419610694'
+channel_name = 'SolanaNewPumpfun'
+
+def api_key_rotator():
+    global api_key_index, api_key
+    api_key_index = (api_key_index + 1) % len(api_keys)
+    api_key = api_keys[api_key_index]
+    print(f"API Key rotated to: {api_key}")
 
 class TokenPairQueue:
     def __init__(self, max_size=MAX_PAIRS_CACHE):
@@ -38,56 +57,7 @@ def check_creator_wallet_percentage(total_supply, creator_balance):
         print("Total supply cannot be zero.")
         return False
 
-class BurnTracker:
-    def __init__(self):
-        self.tracked_tokens = {}
-
-    def add_token(self, token_address, total_supply, creator_balance):
-        self.tracked_tokens[token_address] = {
-            'total_supply': total_supply,
-            'creator_balance': creator_balance,
-            'last_checked': 0,  # Timestamp of the last check
-            'end_time': asyncio.get_event_loop().time() + BURN_TRACK_DURATION  # Track for 1 hour
-        }
-
-    def is_tracking(self, token_address):
-        return token_address in self.tracked_tokens
-
-    def remove_expired_tokens(self):
-        current_time = asyncio.get_event_loop().time()
-        self.tracked_tokens = {k: v for k, v in self.tracked_tokens.items() if v['end_time'] > current_time}
-
-    def update_last_checked(self, token_address):
-        if token_address in self.tracked_tokens:
-            self.tracked_tokens[token_address]['last_checked'] = asyncio.get_event_loop().time()
-
-    def get_tracked_tokens(self):
-        return self.tracked_tokens
-
-async def scan_for_burns(burn_tracker):
-    while True:
-        burn_tracker.remove_expired_tokens()
-
-        for token_address, data in burn_tracker.get_tracked_tokens().items():
-            if asyncio.get_event_loop().time() - data['last_checked'] >= BURN_SCAN_INTERVAL:
-                # Fetch the current total supply and check for burns
-                current_total_supply = fetch_wallet_balance(token_address, token_address, api_key)  # Assuming total supply can be fetched like this
-                burn_amount = data['total_supply'] - current_total_supply
-                if burn_amount >= data['creator_balance']:
-                    message_text = f"ALERT: Burn detected for token {token_address}.\nBurn Amount: {burn_amount}"
-                    await send_message_to_chat(message_text)
-                    print(f"Burn detected for {token_address}. Burn amount: {burn_amount}")
-                burn_tracker.update_last_checked(token_address)
-
-        await asyncio.sleep(BURN_SCAN_INTERVAL)
-
-api_key = '7f1a9f41-aa9d-41ac-84c9-6b879c5dd8eb'
-api_id = '24855421'
-api_hash = '6a5d75ba93e747bf2411533f00237db6'
-phone_number = '+19419610694'
-channel_name = 'SolanaNewPumpfun'
-
-async def process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache, burn_tracker):
+async def process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache):
     print(f"\n---\nProcessing Token: {token_name}\nToken Address: {token_address}\nWallet: {wallet_address}\nTotal Supply: {total_supply}")
 
     if pair_queue.contains((wallet_address, token_address)):
@@ -95,16 +65,30 @@ async def process_message(message_id, token_name, token_address, wallet_address,
         return
 
     # Introduce a delay before making the API call
-    await asyncio.sleep(5)
+    await asyncio.sleep(1)
 
     cache_key = (wallet_address, token_address)
-    creator_balance = fetch_wallet_balance(wallet_address, token_address, api_key)
-    if creator_balance is not None:
-        wallet_cache[cache_key] = creator_balance
-        print(f"Token Balance: {creator_balance}")
-    else:
-        print(f"Failed to fetch balance for wallet {wallet_address}")
-        return
+    try:
+        creator_balance = fetch_wallet_balance(wallet_address, token_address, api_key)
+        if creator_balance is not None:
+            wallet_cache[cache_key] = creator_balance
+            print(f"Token Balance: {creator_balance}")
+        else:
+            print(f"Failed to fetch balance for wallet {wallet_address}")
+            return
+    except Exception as e:
+        print(f"Error fetching balance: {e}")
+        if '429' in str(e):
+            api_key_rotator()
+            creator_balance = fetch_wallet_balance(wallet_address, token_address, api_key)  # Retry with new key
+            if creator_balance is not None:
+                wallet_cache[cache_key] = creator_balance
+                print(f"Token Balance after rotation: {creator_balance}")
+            else:
+                print(f"Failed to fetch balance for wallet {wallet_address} after API key rotation")
+                return
+        else:
+            return
 
     if check_creator_wallet_percentage(float(total_supply), creator_balance):
         message_text = (
@@ -121,10 +105,6 @@ async def process_message(message_id, token_name, token_address, wallet_address,
         print(f"\n---\n{message_text}\n---")
         await send_message_to_chat(message_text)
 
-        # Add token to burn tracker
-        if not burn_tracker.is_tracking(token_address):
-            burn_tracker.add_token(token_address, float(total_supply), creator_balance)
-            print(f"Started burn tracking for token {token_address}.")
     else:
         print("Creator's wallet does not hold between 20% and 30% of the total supply.")
 
@@ -135,16 +115,12 @@ async def main():
     last_message_id = get_last_message_id()
     wallet_cache = {}
     pair_queue = TokenPairQueue(MAX_PAIRS_CACHE)
-    burn_tracker = BurnTracker()
 
     if last_message_id is None:
         async for message_id, *_ in read_telegram_messages(api_id, api_hash, phone_number, channel_name, None):
             last_message_id = message_id
             set_last_message_id(last_message_id)
             break
-
-    # Start burn scanning task in the background
-    asyncio.create_task(scan_for_burns(burn_tracker))
 
     while True:
         async for message_id, token_address, wallet_address, total_supply, token_name in read_telegram_messages(api_id, api_hash, phone_number, channel_name, last_message_id):
@@ -154,15 +130,15 @@ async def main():
             set_last_message_id(message_id)
 
             # Process each message and manage the queue
-            await process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache, burn_tracker)
-            await asyncio.sleep(2)  # Staggering the processing with a delay of 2 seconds
+            await process_message(message_id, token_name, token_address, wallet_address, total_supply, pair_queue, wallet_cache)
+            await asyncio.sleep(1)  # Staggering the processing with a delay of 2 seconds
 
             # Ensure only the first scan outputs results
             if len(pair_queue.queue) == MAX_PAIRS_CACHE:
                 print(f"Queue full. Message {pair_queue.queue[0]} will be removed on the next incoming message.")
 
         print("Waiting for new messages...")
-        await asyncio.sleep(3)
+        await asyncio.sleep(1)
 
 if __name__ == "__main__":
     asyncio.run(main())
