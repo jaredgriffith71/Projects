@@ -5,6 +5,8 @@ def fetch_wallet_balance(wallet_address, token_address, api_key):
     
     try:
         response = requests.get(url)
+        if response.status_code == 429:
+            raise requests.exceptions.RequestException("429 Too Many Requests")
         response.raise_for_status()
         data = response.json()
 
@@ -27,6 +29,17 @@ def fetch_wallet_balance(wallet_address, token_address, api_key):
                 except Exception as e:
                     print(f"Error calculating balance: {e}")
                     return None
+
+        print(f"Token not found in response for address: {wallet_address}")
+        return None
+
+    except requests.RequestException as e:
+        print(f"Request error: {e}")
+        raise  # Re-raise to handle in the caller
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return None
+
 
         print(f"Token not found in response for address: {wallet_address}")
         return None
