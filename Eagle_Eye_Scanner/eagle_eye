@@ -9,19 +9,18 @@ LAST_MESSAGE_ID_FILE = 'last_message_id.txt'
 MAX_PAIRS_CACHE = 3  # Maximum number of token-wallet pairs to cache
 
 api_keys = [
-    '7f1a9f41-aa9d-41ac-84c9-6b879c5dd8eb',
-    '9cffcf12-0c33-476c-af8f-e00c249d93a2',
-    '51d469a8-d566-41f1-b885-ef3c70e86617',
-    '67e2cdf5-f8fe-4440-b525-896c5ca3db11',
-    'dbc9b5f2-b852-4164-80ea-c5afc4b30750'
+    'apikey1',
+    'apikey2',
+    'apikey3',
+    '...'
 ]
 api_key_index = 0
 api_key = api_keys[api_key_index]
 
-api_id = '24855421'
-api_hash = '6a5d75ba93e747bf2411533f00237db6'
-phone_number = '+19419610694'
-channel_name = 'SolanaNewPumpfun'
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+phone_number = 'YOUR_PHONE_NUMBER'
+channel_name = 'DESIRED_TELEGRAM_CHANNEL'
 
 def api_key_rotator():
     global api_key_index, api_key
