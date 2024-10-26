@@ -7,6 +7,7 @@ To get alerts to your telegram channel, you will need to create a telegram bot w
 In order to run this program make sure the necessary files are installed from requirements.txt
 
 Swap out the required information in eagle_eye:
+
 apikey1/2/3/...
 YOUR_API_ID
 YOUR_API_HASH
