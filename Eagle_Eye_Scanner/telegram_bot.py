@@ -3,10 +3,10 @@ from aiogram.filters import Command
 import asyncio
 
 # Replace with your bot's token
-API_TOKEN = '7546943927:AAFOqfThcLXFblo7gAL9v25yqQEi_Q-H208'
+API_TOKEN = 'YOUR_API_TOKEN'
 
 # Replace with your chat ID
-CHAT_ID = -1002230829243
+CHAT_ID = YOUR_CHAT_ID
 
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
